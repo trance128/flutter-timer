@@ -16,7 +16,8 @@ class StopwatchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaying(BuildContext context) {
+  Widget _buildPlaying(
+      BuildContext context, PresentationData presentationData) {
     return Column(
       children: <Widget>[
         Expanded(
@@ -39,7 +40,44 @@ class StopwatchScreen extends StatelessWidget {
         ),
         Expanded(
           flex: 7,
-          child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Colors.black,
+                  child: Center(
+                    child: Text(
+                      presentationData.stopwatchPaused ? 'Paused' : '',
+                      style: TextStyle(
+                          fontSize: 20, color: Theme.of(context).errorColor),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: (MediaQuery.of(context).size.height * 0.075)),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            '00:00',
+                            style: Theme.of(context).textTheme.headline,
+                          ),
+                        ),
+                        onTap: () => presentationData.togglePauseStopwatch(),
+                      ),
+                      Container(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -58,7 +96,7 @@ class StopwatchScreen extends StatelessWidget {
               ? FlatButton(
                   child: playButton(context),
                   onPressed: () => presentationData.startStopwatch())
-              : _buildPlaying(context),
+              : _buildPlaying(context, presentationData),
         ),
       ),
       bottomNavigationBar: BottomBar(),

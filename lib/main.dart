@@ -26,6 +26,13 @@ class _HomeState extends State<Home> {
           theme: ThemeData(
             primaryColor: Colors.white,
             accentColor: Colors.black,
+            textTheme: TextTheme(
+              // use headline for portrait orientation
+              headline: TextStyle(
+                fontSize: 100,
+                color: Colors.white,
+              ),
+            ),
           ),
           home: StopwatchScreen(),
           routes: {
