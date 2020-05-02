@@ -22,12 +22,12 @@ class BottomBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.tune,
-            color: presentationData.bottomBarIndex == 0 ? Colors.grey : Colors.white,
+            color:Colors.white,
           ),
           title: Text(
             "Settings",
             style: TextStyle(
-              color: presentationData.bottomBarIndex == 0 ? Colors.grey : Colors.white,
+              color: Colors.white,
             ),
           ),
         ),
