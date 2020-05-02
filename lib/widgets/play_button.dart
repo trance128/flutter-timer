@@ -10,5 +10,5 @@ Widget playButton(BuildContext context, [bool large = true]) {
     }
   }
 
-  return Icon(Icons.play_circle_filled, color: Colors.white, size: getSize()); 
+  return Icon(Icons.play_circle_outline, color: Colors.white, size: getSize()); 
 }

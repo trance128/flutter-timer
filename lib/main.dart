@@ -23,16 +23,16 @@ class _HomeState extends State<Home> {
         )
       ],
       child: MaterialApp(
-        home: Scaffold(
-          backgroundColor: Colors.black,
-          body: TimerScreen(),
-        ),
-        routes: {
-          StopwatchScreen.routeName: (context) => StopwatchScreen(),
-          TimerScreen.routeName: (context) => TimerScreen(),
-          OptionsScreen.routeName: (context) => OptionsScreen(),
-        }
-      ),
+          theme: ThemeData(
+            primaryColor: Colors.white,
+            accentColor: Colors.black,
+          ),
+          home: StopwatchScreen(),
+          routes: {
+            StopwatchScreen.routeName: (context) => StopwatchScreen(),
+            TimerScreen.routeName: (context) => TimerScreen(),
+            OptionsScreen.routeName: (context) => OptionsScreen(),
+          }),
     );
   }
 }

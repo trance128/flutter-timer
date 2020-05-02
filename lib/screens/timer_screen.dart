@@ -8,11 +8,11 @@ import '../providers/presentation_data.dart';
 class TimerScreen extends StatelessWidget {
   static const String routeName = '/timer-screen';
 
-  Widget PlaceholderText() {
+  Widget placeholderText(BuildContext context) {
     return Text(
       "I'm a Timer Screen",
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white, fontSize: 50),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 50),
     );
   }
 
@@ -21,7 +21,7 @@ class TimerScreen extends StatelessWidget {
     final presentationData = Provider.of<PresentationData>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).accentColor,
       body: Center(
         child: playButton(context),
       ),

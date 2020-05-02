@@ -16,38 +16,38 @@ class BottomBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       currentIndex: presentationData.bottomBarIndex,
       elevation: 0,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white,
+      selectedItemColor: Theme.of(context).primaryColor,
+      unselectedItemColor: Theme.of(context).primaryColor,
       selectedFontSize: 14,
       unselectedFontSize: 14,
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).accentColor,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
             Icons.timer,
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
           ),
           title: Text(
             'Stopwatch',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.slow_motion_video, color: Colors.white),
+          icon: Icon(Icons.slow_motion_video, color: Theme.of(context).primaryColor),
           title: Text(
             'Timer',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.settings,
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
           ),
           title: Text(
             "Settings",
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ),

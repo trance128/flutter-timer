@@ -8,11 +8,41 @@ import '../providers/presentation_data.dart';
 class StopwatchScreen extends StatelessWidget {
   static const String routeName = '/stopwatch-screen';
 
-  Widget PlaceholderText() {
+  Widget placeholderText(BuildContext context) {
     return Text(
       "I'm a Timer Screen",
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white, fontSize: 50),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 50),
+    );
+  }
+
+  Widget _buildPlaying(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(
+            alignment: Alignment.centerRight,
+            width: double.infinity,
+            child: IconButton(
+              padding: const EdgeInsets.only(
+                right: 20,
+              ),
+              icon: Icon(
+                Icons.replay,
+                color: Theme.of(context).primaryColor,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 7,
+          child: Container(
+          ),
+        ),
+      ],
     );
   }
 
@@ -21,9 +51,15 @@ class StopwatchScreen extends StatelessWidget {
     final presentationData = Provider.of<PresentationData>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: playButton(context),
+      backgroundColor: Theme.of(context).accentColor,
+      body: SafeArea(
+        child: Center(
+          child: presentationData.stopwatchStarted
+              ? FlatButton(
+                  child: playButton(context),
+                  onPressed: () => presentationData.startStopwatch())
+              : _buildPlaying(context),
+        ),
       ),
       bottomNavigationBar: BottomBar(),
     );
