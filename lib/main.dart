@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './widgets/bottom_bar.dart';
 import './providers/presentation_data.dart';
 import './screens/timer_screen.dart';
 import './screens/options_screen.dart';
+import './screens/stopwatch_screen.dart';
 
 void main() => runApp(Home());
 
@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
           body: TimerScreen(),
         ),
         routes: {
+          StopwatchScreen.routeName: (context) => StopwatchScreen(),
           TimerScreen.routeName: (context) => TimerScreen(),
           OptionsScreen.routeName: (context) => OptionsScreen(),
         }

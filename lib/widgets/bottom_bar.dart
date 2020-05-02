@@ -4,13 +4,16 @@ import 'package:provider/provider.dart';
 import '../providers/presentation_data.dart';
 import '../screens/options_screen.dart';
 import '../screens/timer_screen.dart';
+import '../screens/stopwatch_screen.dart';
 
 class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PresentationData presentationData = Provider.of<PresentationData>(context);
+    final PresentationData presentationData =
+        Provider.of<PresentationData>(context);
 
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       currentIndex: presentationData.bottomBarIndex,
       elevation: 0,
       selectedItemColor: Colors.white,
@@ -21,8 +24,25 @@ class BottomBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.tune,
-            color:Colors.white,
+            Icons.timer,
+            color: Colors.white,
+          ),
+          title: Text(
+            'Stopwatch',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.slow_motion_video, color: Colors.white),
+          title: Text(
+            'Timer',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
           ),
           title: Text(
             "Settings",
@@ -31,18 +51,6 @@ class BottomBar extends StatelessWidget {
             ),
           ),
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(
-            Icons.pause,
-          ),
-          title: const Text("Pause"),
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(
-            Icons.replay,
-          ),
-          title: const Text("Reset"),
-        )
       ],
       onTap: (index) {
         presentationData.setBottomBarIndex(index);
@@ -50,22 +58,24 @@ class BottomBar extends StatelessWidget {
         switch (index) {
           case 0:
             {
-              // TODO display options screen
+              // stop watch screen
               print("Case 0");
-              Navigator.of(context).pushNamed(OptionsScreen.routeName);
+              Navigator.of(context).pushNamed(StopwatchScreen.routeName);
               break;
             }
           case 1:
             {
-              // TODO pause timer
+              // timer screen
               print("Case 1");
               Navigator.of(context).pushReplacementNamed(TimerScreen.routeName);
               break;
             }
           case 2:
             {
-              // TODO reset timer
+              // options screen
               print("Case 2");
+              Navigator.of(context).pushNamed(OptionsScreen.routeName);
+              break;
             }
         }
       },
