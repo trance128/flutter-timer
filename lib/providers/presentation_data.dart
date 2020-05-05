@@ -68,7 +68,7 @@ class PresentationData with ChangeNotifier {
 
   // sets a timer that updates our returned String, elapsedTime
   _continuousUpdateTimeString() async {
-    swTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    swTimer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       _returnString = buildElapsedTimeString();
       // TODO remove print when done
       print('Doing my thing');

@@ -27,12 +27,16 @@ class _HomeState extends State<Home> {
             primaryColor: Colors.white,
             accentColor: Colors.black,
             textTheme: TextTheme(
-              // use headline for portrait orientation
-              headline: TextStyle(
-                fontSize: 100,
-                color: Colors.white,
-              ),
-            ),
+                // use headline for portrait orientation
+                headline: TextStyle(
+                  fontSize: 100,
+                  color: Colors.white,
+                ),
+                // use display1 for landscape
+                display1: TextStyle(
+                  fontSize: 175,
+                  color: Colors.white,
+                )),
           ),
           home: StopwatchScreen(),
           routes: {
@@ -43,13 +47,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-// Center(
-//             child: Text(
-//               "25:00",
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontSize: 100,
-//               ),
-//             ),
-//           ),

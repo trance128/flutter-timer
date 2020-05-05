@@ -8,38 +8,41 @@ import '../providers/presentation_data.dart';
 class StopwatchScreen extends StatelessWidget {
   static const String routeName = '/stopwatch-screen';
 
+  Widget _buildResetButton(
+      BuildContext context, PresentationData presentationData) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: IconButton(
+        padding: const EdgeInsets.only(
+          right: 20,
+        ),
+        icon: Icon(
+          Icons.replay,
+          color: Theme.of(context).primaryColor,
+          size: 30,
+        ),
+        onPressed: presentationData.resetStopwatch,
+      ),
+    );
+  }
+
   // builds the stopwatch screen once play has been pressed
   // displays timer, can click to pause / unpause
-  Widget _buildPlaying(
+  Widget _buildPlayingPortrait(
       BuildContext context, PresentationData presentationData) {
     return Column(
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: Container(
-            alignment: Alignment.centerRight,
-            width: double.infinity,
-            child: IconButton(
-              padding: const EdgeInsets.only(
-                right: 20,
-              ),
-              icon: Icon(
-                Icons.replay,
-                color: Theme.of(context).primaryColor,
-                size: 30,
-              ),
-              onPressed: presentationData.resetStopwatch,
-            ),
-          ),
+          child: _buildResetButton(context, presentationData),
         ),
         Expanded(
-          flex: 7,
+          flex: 13,
           child: Column(
             children: <Widget>[
               Expanded(
                 flex: 1,
                 child: Container(
-                  color: Colors.black,
                   child: Center(
                     child: Text(
                       presentationData.stopwatchPaused ? 'Paused' : '',
@@ -50,15 +53,13 @@ class StopwatchScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 2,
                 child: Container(
-                  padding: EdgeInsets.only(
-                      top: (MediaQuery.of(context).size.height * 0.075)),
                   child: Column(
                     children: [
                       InkWell(
                         child: Container(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(50),
                           child: Text(
                             presentationData.elapsedTime,
                             style: Theme.of(context).textTheme.headline,
@@ -78,6 +79,41 @@ class StopwatchScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildPlayingLandscape(
+      BuildContext context, PresentationData presentationData) {
+    return Column(children: <Widget>[
+      Container(
+        width: double.infinity,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Center(
+                  child: Text(
+                    presentationData.stopwatchPaused ? 'Paused' : '',
+                    style: TextStyle(
+                        fontSize: 20, color: Theme.of(context).errorColor),
+                  ),
+                ),
+              ),
+            ),
+            _buildResetButton(context, presentationData),
+          ],
+        ),
+      ),
+      Expanded(
+        child: InkWell(
+          child: Text(
+            presentationData.elapsedTime,
+            style: Theme.of(context).textTheme.display1,
+          ),
+          onTap: () => presentationData.togglePauseStopwatch(),
+        ),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     final presentationData = Provider.of<PresentationData>(context);
@@ -87,7 +123,9 @@ class StopwatchScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: presentationData.stopwatchStarted
-              ? _buildPlaying(context, presentationData)
+              ? MediaQuery.of(context).orientation == Orientation.portrait
+                  ? _buildPlayingPortrait(context, presentationData)
+                  : _buildPlayingLandscape(context, presentationData)
               : FlatButton(
                   child: playButton(context),
                   onPressed: () => presentationData.startStopwatch()),
