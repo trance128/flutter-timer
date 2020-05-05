@@ -109,7 +109,7 @@ class PresentationData with ChangeNotifier {
     _timerStarted = true;
     _timerPaused = false;
     _timer.start();
-    _timerReturnString = '00:00';
+    _timerReturnString = buildTimerString();
     _continuousUpdateTimer();
 
     notifyListeners();
@@ -131,8 +131,9 @@ class PresentationData with ChangeNotifier {
 
   // calculates the remaining time and displays formats it nicely for display
   String buildTimerString() {
-    int remainingMinutes = _startingMinutes - _timer.elapsed.inMinutes; 
-    int remainingSeconds = _startingSeconds - (_timer.elapsed.inSeconds % 60);
+    int remainingSeconds = (_totalTime - _timer.elapsed.inSeconds);
+    int remainingMinutes = remainingSeconds ~/ 60;
+    remainingSeconds = remainingSeconds % 60;
 
     String returnSeconds() {
       return remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
