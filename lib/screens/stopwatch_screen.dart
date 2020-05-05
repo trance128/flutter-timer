@@ -8,14 +8,6 @@ import '../providers/presentation_data.dart';
 class StopwatchScreen extends StatelessWidget {
   static const String routeName = '/stopwatch-screen';
 
-  Widget placeholderText(BuildContext context) {
-    return Text(
-      "I'm a Timer Screen",
-      textAlign: TextAlign.center,
-      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 50),
-    );
-  }
-
   // builds the stopwatch screen once play has been pressed
   // displays timer, can click to pause / unpause
   Widget _buildPlaying(
@@ -36,7 +28,7 @@ class StopwatchScreen extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: presentationData.resetStopwatch,
             ),
           ),
         ),

@@ -4,15 +4,16 @@ import 'package:flutter/foundation.dart';
 
 class PresentationData with ChangeNotifier {
   bool _timerStarted = false;
-  bool get timerStarted => _timerStarted;
   bool _stopwatchStarted = false;
   bool _stopwatchPaused = false;
-  String _returnString = '00:00';
-  Timer timer;
+  String _returnString;
+  String _startingString = '00:00';
+  Timer swTimer;
+  int _bottomBarIndex = 1;
 
   Stopwatch _sw = Stopwatch();
 
-  int _bottomBarIndex = 1;
+  bool get timerStarted => _timerStarted;
   int get bottomBarIndex => _bottomBarIndex;
   bool get stopwatchStarted => _stopwatchStarted;
   bool get stopwatchPaused => _stopwatchPaused;
@@ -24,6 +25,7 @@ class PresentationData with ChangeNotifier {
   }
 
   void startStopwatch() {
+    _returnString = _startingString;
     _stopwatchStarted = true;
     _sw.start();
     _continuousUpdateTimeString();
@@ -34,7 +36,7 @@ class PresentationData with ChangeNotifier {
   void togglePauseStopwatch() {
     _stopwatchPaused = !_stopwatchPaused;
 
-    if(!_stopwatchPaused) {
+    if (!_stopwatchPaused) {
       _sw.start();
       _continuousUpdateTimeString();
     } else {
@@ -53,10 +55,8 @@ class PresentationData with ChangeNotifier {
   // formats _sw.elapsed into string, displaying correct amount of 0's in minutes and seconds
   String buildElapsedTimeString() {
     String returnSeconds() {
-      int _secondsOnly = _sw.elapsed.inSeconds % 60; 
-      return _secondsOnly  < 10
-          ? '0$_secondsOnly'
-          : '$_secondsOnly';
+      int _secondsOnly = _sw.elapsed.inSeconds % 60;
+      return _secondsOnly < 10 ? '0$_secondsOnly' : '$_secondsOnly';
     }
 
     return _sw.elapsed.inSeconds < 60
@@ -68,14 +68,23 @@ class PresentationData with ChangeNotifier {
 
   // sets a timer that updates our returned String, elapsedTime
   _continuousUpdateTimeString() async {
-    timer = Timer.periodic(Duration(seconds: 1), (timer){
+    swTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _returnString = buildElapsedTimeString();
+      // TODO remove print when done
       print('Doing my thing');
       notifyListeners();
     });
   }
 
   void _cancelTimer() async {
-    Timer(Duration(milliseconds: 1), () => timer.cancel());
+    Timer(Duration(milliseconds: 1), () => swTimer.cancel());
+  }
+
+  void resetStopwatch() {
+    _cancelTimer();
+    _stopwatchStarted = false;
+    _stopwatchPaused = false;
+    _sw.reset();
+    notifyListeners();
   }
 }
