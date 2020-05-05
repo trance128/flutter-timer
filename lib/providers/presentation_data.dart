@@ -87,4 +87,8 @@ class PresentationData with ChangeNotifier {
     _sw.reset();
     notifyListeners();
   }
+
+  void startTimer() {
+    print("Whatup my g");
+  }
 }

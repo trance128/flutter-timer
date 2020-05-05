@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Widget playButton(BuildContext context, [bool large = true]) {
   double getSize() {
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
-      return large ? MediaQuery.of(context).size.width * 0.8 : MediaQuery.of(context).size.width * 0.2;
+      return large ? MediaQuery.of(context).size.width * 0.8 : MediaQuery.of(context).size.width * 0.75;
     } else {
       return large ? MediaQuery.of(context).size.height * 0.7 : MediaQuery.of(context).size.height * 0.5;
     }

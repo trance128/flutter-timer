@@ -24,19 +24,28 @@ class _HomeState extends State<Home> {
       ],
       child: MaterialApp(
           theme: ThemeData(
-            primaryColor: Colors.white,
-            accentColor: Colors.black,
+            primaryColor: Colors.black,
+            accentColor: Colors.white,
             textTheme: TextTheme(
-                // use headline for portrait orientation
-                headline: TextStyle(
-                  fontSize: 100,
-                  color: Colors.white,
-                ),
-                // use display1 for landscape
-                display1: TextStyle(
-                  fontSize: 175,
-                  color: Colors.white,
-                )),
+              // use display2 for portrait orientation
+              display2: TextStyle(
+                fontSize: 100,
+                color: Colors.white,
+              ),
+              // use display1 for landscape
+              display1: TextStyle(
+                fontSize: 175,
+                color: Colors.white,
+              ),
+              body1: TextStyle(
+                fontSize: 30,
+                color: Colors.grey[200],
+              ),
+              headline: TextStyle(
+                fontSize: 40,
+                color: Colors.grey[200],
+              ),
+            ),
           ),
           home: StopwatchScreen(),
           routes: {

@@ -3,38 +3,20 @@ import 'package:provider/provider.dart';
 
 import '../widgets/bottom_bar.dart';
 import '../widgets/play_button.dart';
+import '../widgets/reset_button.dart';
 import '../providers/presentation_data.dart';
 
 class StopwatchScreen extends StatelessWidget {
   static const String routeName = '/stopwatch-screen';
 
-  Widget _buildResetButton(
-      BuildContext context, PresentationData presentationData) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: IconButton(
-        padding: const EdgeInsets.only(
-          right: 20,
-        ),
-        icon: Icon(
-          Icons.replay,
-          color: Theme.of(context).primaryColor,
-          size: 30,
-        ),
-        onPressed: presentationData.resetStopwatch,
-      ),
-    );
-  }
-
   // builds the stopwatch screen once play has been pressed
-  // displays timer, can click to pause / unpause
   Widget _buildPlayingPortrait(
       BuildContext context, PresentationData presentationData) {
     return Column(
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: _buildResetButton(context, presentationData),
+          child: buildResetButton(context, presentationData),
         ),
         Expanded(
           flex: 13,
@@ -62,7 +44,7 @@ class StopwatchScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(50),
                           child: Text(
                             presentationData.elapsedTime,
-                            style: Theme.of(context).textTheme.headline,
+                            style: Theme.of(context).textTheme.display2,
                           ),
                         ),
                         onTap: () => presentationData.togglePauseStopwatch(),
@@ -98,7 +80,7 @@ class StopwatchScreen extends StatelessWidget {
                 ),
               ),
             ),
-            _buildResetButton(context, presentationData),
+            buildResetButton(context, presentationData),
           ],
         ),
       ),
@@ -119,7 +101,7 @@ class StopwatchScreen extends StatelessWidget {
     final presentationData = Provider.of<PresentationData>(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Center(
           child: presentationData.stopwatchStarted
