@@ -16,6 +16,8 @@ class StopwatchScreen extends StatelessWidget {
     );
   }
 
+  // builds the stopwatch screen once play has been pressed
+  // displays timer, can click to pause / unpause
   Widget _buildPlaying(
       BuildContext context, PresentationData presentationData) {
     return Column(
@@ -66,7 +68,7 @@ class StopwatchScreen extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           child: Text(
-                            '00:00',
+                            presentationData.elapsedTime,
                             style: Theme.of(context).textTheme.headline,
                           ),
                         ),
@@ -93,10 +95,10 @@ class StopwatchScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: presentationData.stopwatchStarted
-              ? FlatButton(
+              ? _buildPlaying(context, presentationData)
+              : FlatButton(
                   child: playButton(context),
-                  onPressed: () => presentationData.startStopwatch())
-              : _buildPlaying(context, presentationData),
+                  onPressed: () => presentationData.startStopwatch()),
         ),
       ),
       bottomNavigationBar: BottomBar(),
