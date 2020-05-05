@@ -15,7 +15,7 @@ Widget buildResetButton(
           color: Theme.of(context).accentColor,
           size: 30,
         ),
-        onPressed: swScreen ? presentationData.resetStopwatch : (){},
+        onPressed: swScreen ? presentationData.resetStopwatch : presentationData.resetTimer,
       ),
     );
   }

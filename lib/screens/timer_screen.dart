@@ -35,7 +35,7 @@ class _TimerScreenState extends State<TimerScreen> {
                 child: Container(
                   child: Center(
                     child: Text(
-                      presentationData.stopwatchPaused ? 'Paused' : '',
+                      presentationData.timerPaused ? 'Paused' : '',
                       style: TextStyle(
                           fontSize: 20, color: Theme.of(context).errorColor),
                     ),
@@ -51,11 +51,11 @@ class _TimerScreenState extends State<TimerScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(50),
                           child: Text(
-                            presentationData.elapsedTime,
+                            presentationData.timeLeft,
                             style: Theme.of(context).textTheme.display2,
                           ),
                         ),
-                        onTap: () => presentationData.togglePauseStopwatch(),
+                        onTap: () => presentationData.togglePauseTimer(),
                       ),
                       Container(),
                     ],
@@ -69,11 +69,14 @@ class _TimerScreenState extends State<TimerScreen> {
     );
   }
 
-  Widget _buildNumberPicker(BuildContext context) {
+  Widget _buildNumberPicker(BuildContext context, PresentationData presentationData) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        playButton(context, false),
+        FlatButton(
+          child: playButton(context, false),
+          onPressed: () => presentationData.startTimer(_minutes ?? 25, _seconds ?? 0),
+        ),
         Container(
           height: 155,
           child: Row(
@@ -128,13 +131,11 @@ class _TimerScreenState extends State<TimerScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Center(
-          child: presentationData.stopwatchStarted
+          child: presentationData.timerStarted
               ? MediaQuery.of(context).orientation == Orientation.portrait
                   ? _buildPlayingPortrait(context, presentationData)
                   : Container() //_buildPlayingLandscape(context, presentationData)
-              : FlatButton(
-                  child: _buildNumberPicker(context),
-                  onPressed: () => presentationData.startTimer()),
+              : _buildNumberPicker(context, presentationData),
         ),
       ),
       bottomNavigationBar: BottomBar(),
