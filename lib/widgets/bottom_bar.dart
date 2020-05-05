@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/presentation_data.dart';
+import '../providers/stopwatch_data.dart';
 import '../screens/options_screen.dart';
 import '../screens/timer_screen.dart';
 import '../screens/stopwatch_screen.dart';
@@ -9,8 +9,8 @@ import '../screens/stopwatch_screen.dart';
 class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PresentationData presentationData =
-        Provider.of<PresentationData>(context);
+    final StopwatchData presentationData =
+        Provider.of<StopwatchData>(context);
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,

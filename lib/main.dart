@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './providers/presentation_data.dart';
+import './providers/stopwatch_data.dart';
+import './providers/timer_data.dart';
 import './screens/timer_screen.dart';
 import './screens/options_screen.dart';
 import './screens/stopwatch_screen.dart';
@@ -18,8 +19,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<PresentationData>(
-          create: (_) => PresentationData(),
+        ChangeNotifierProvider<StopwatchData>(
+          create: (_) => StopwatchData(),
+        ),
+        ChangeNotifierProvider<TimerData>(
+          create: (_) => TimerData(),
         )
       ],
       child: MaterialApp(

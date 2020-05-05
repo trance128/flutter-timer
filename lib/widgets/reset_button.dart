@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../providers/presentation_data.dart';
-
 Widget buildResetButton(
-      BuildContext context, PresentationData presentationData, {bool swScreen = true}) {
+      BuildContext context, Function callback, {bool swScreen = true}) {
     return Container(
       alignment: Alignment.centerRight,
       child: IconButton(
@@ -15,7 +13,7 @@ Widget buildResetButton(
           color: Theme.of(context).accentColor,
           size: 30,
         ),
-        onPressed: swScreen ? presentationData.resetStopwatch : presentationData.resetTimer,
+        onPressed: callback,
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:numberpicker/numberpicker.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/play_button.dart';
 import '../widgets/reset_button.dart';
-import '../providers/presentation_data.dart';
+import '../providers/timer_data.dart';
 
 class TimerScreen extends StatefulWidget {
   static const String routeName = '/timer-screen';
@@ -19,12 +19,12 @@ class _TimerScreenState extends State<TimerScreen> {
   int _seconds;
 
   Widget _buildPlayingPortrait(
-      BuildContext context, PresentationData presentationData) {
+      BuildContext context, TimerData timerData) {
     return Column(
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: buildResetButton(context, presentationData, swScreen: false),
+          child: buildResetButton(context, timerData.resetTimer, swScreen: false),
         ),
         Expanded(
           flex: 13,
@@ -35,7 +35,7 @@ class _TimerScreenState extends State<TimerScreen> {
                 child: Container(
                   child: Center(
                     child: Text(
-                      presentationData.timerPaused ? 'Paused' : '',
+                      timerData.timerPaused ? 'Paused' : '',
                       style: TextStyle(
                           fontSize: 20, color: Theme.of(context).errorColor),
                     ),
@@ -51,11 +51,11 @@ class _TimerScreenState extends State<TimerScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(50),
                           child: Text(
-                            presentationData.timeLeft,
+                            timerData.timeLeft,
                             style: Theme.of(context).textTheme.display2,
                           ),
                         ),
-                        onTap: () => presentationData.togglePauseTimer(),
+                        onTap: () => timerData.togglePauseTimer(),
                       ),
                       Container(),
                     ],
@@ -69,13 +69,13 @@ class _TimerScreenState extends State<TimerScreen> {
     );
   }
 
-  Widget _buildNumberPicker(BuildContext context, PresentationData presentationData) {
+  Widget _buildNumberPicker(BuildContext context, TimerData timerData) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FlatButton(
           child: playButton(context, false),
-          onPressed: () => presentationData.startTimer(_minutes ?? 25, _seconds ?? 0),
+          onPressed: () => timerData.startTimer(_minutes ?? 25, _seconds ?? 0),
         ),
         Container(
           height: 155,
@@ -123,19 +123,54 @@ class _TimerScreenState extends State<TimerScreen> {
     );
   }
 
+  Widget _buildPlayingLandscape(
+      BuildContext context, TimerData timerData) {
+    return Column(children: <Widget>[
+      Container(
+        width: double.infinity,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Center(
+                  child: Text(
+                    timerData.timerPaused ? 'Paused' : '',
+                    style: TextStyle(
+                        fontSize: 20, color: Theme.of(context).errorColor),
+                  ),
+                ),
+              ),
+            ),
+            buildResetButton(context, timerData.resetTimer, swScreen: false),
+          ],
+        ),
+      ),
+      Expanded(
+        child: InkWell(
+          child: Text(
+            timerData.timeLeft,
+            style: Theme.of(context).textTheme.display1,
+          ),
+          onTap: () => timerData.togglePauseTimer(),
+        ),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final presentationData = Provider.of<PresentationData>(context);
+    final timerData = Provider.of<TimerData>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Center(
-          child: presentationData.timerStarted
+          child: timerData.timerStarted
               ? MediaQuery.of(context).orientation == Orientation.portrait
-                  ? _buildPlayingPortrait(context, presentationData)
-                  : Container() //_buildPlayingLandscape(context, presentationData)
-              : _buildNumberPicker(context, presentationData),
+                  ? _buildPlayingPortrait(context, timerData)
+                  : _buildPlayingLandscape(context, timerData)
+              : _buildNumberPicker(context, timerData),
         ),
       ),
       bottomNavigationBar: BottomBar(),

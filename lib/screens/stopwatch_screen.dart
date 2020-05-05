@@ -4,19 +4,19 @@ import 'package:provider/provider.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/play_button.dart';
 import '../widgets/reset_button.dart';
-import '../providers/presentation_data.dart';
+import '../providers/stopwatch_data.dart';
 
 class StopwatchScreen extends StatelessWidget {
   static const String routeName = '/stopwatch-screen';
 
   // builds the stopwatch screen once play has been pressed
   Widget _buildPlayingPortrait(
-      BuildContext context, PresentationData presentationData) {
+      BuildContext context, StopwatchData stopwatchData) {
     return Column(
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: buildResetButton(context, presentationData),
+          child: buildResetButton(context, stopwatchData.resetStopwatch),
         ),
         Expanded(
           flex: 13,
@@ -27,7 +27,7 @@ class StopwatchScreen extends StatelessWidget {
                 child: Container(
                   child: Center(
                     child: Text(
-                      presentationData.stopwatchPaused ? 'Paused' : '',
+                      stopwatchData.stopwatchPaused ? 'Paused' : '',
                       style: TextStyle(
                           fontSize: 20, color: Theme.of(context).errorColor),
                     ),
@@ -43,11 +43,11 @@ class StopwatchScreen extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(50),
                           child: Text(
-                            presentationData.elapsedTime,
+                            stopwatchData.elapsedTime,
                             style: Theme.of(context).textTheme.display2,
                           ),
                         ),
-                        onTap: () => presentationData.togglePauseStopwatch(),
+                        onTap: () => stopwatchData.togglePauseStopwatch(),
                       ),
                       Container(),
                     ],
@@ -62,7 +62,7 @@ class StopwatchScreen extends StatelessWidget {
   }
 
   Widget _buildPlayingLandscape(
-      BuildContext context, PresentationData presentationData) {
+      BuildContext context, StopwatchData stopwatchData) {
     return Column(children: <Widget>[
       Container(
         width: double.infinity,
@@ -73,24 +73,24 @@ class StopwatchScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 50),
                 child: Center(
                   child: Text(
-                    presentationData.stopwatchPaused ? 'Paused' : '',
+                    stopwatchData.stopwatchPaused ? 'Paused' : '',
                     style: TextStyle(
                         fontSize: 20, color: Theme.of(context).errorColor),
                   ),
                 ),
               ),
             ),
-            buildResetButton(context, presentationData),
+            buildResetButton(context, stopwatchData.resetStopwatch),
           ],
         ),
       ),
       Expanded(
         child: InkWell(
           child: Text(
-            presentationData.elapsedTime,
+            stopwatchData.elapsedTime,
             style: Theme.of(context).textTheme.display1,
           ),
-          onTap: () => presentationData.togglePauseStopwatch(),
+          onTap: () => stopwatchData.togglePauseStopwatch(),
         ),
       ),
     ]);
@@ -98,19 +98,19 @@ class StopwatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presentationData = Provider.of<PresentationData>(context);
+    final stopwatchData = Provider.of<StopwatchData>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Center(
-          child: presentationData.stopwatchStarted
+          child: stopwatchData.stopwatchStarted
               ? MediaQuery.of(context).orientation == Orientation.portrait
-                  ? _buildPlayingPortrait(context, presentationData)
-                  : _buildPlayingLandscape(context, presentationData)
+                  ? _buildPlayingPortrait(context, stopwatchData)
+                  : _buildPlayingLandscape(context, stopwatchData)
               : FlatButton(
                   child: playButton(context),
-                  onPressed: () => presentationData.startStopwatch()),
+                  onPressed: () => stopwatchData.startStopwatch()),
         ),
       ),
       bottomNavigationBar: BottomBar(),
